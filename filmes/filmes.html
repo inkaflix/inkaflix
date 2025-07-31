@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inkaflix Generator pro</title>
+    <link rel="stylesheet" href="../filmes/Styles/style.css">
+    <link rel="stylesheet" href="../filmes/Styles/all-css.css">
+    <style>
+        .dialog-content {
+            max-height: 70vh; /* Ajuste conforme necessário */
+            overflow-y: auto;
+            padding-right: 16px; /* Para compensar a largura da barra de rolagem */
+        }
+    </style>
+	 <style>
+        .dialog-content {
+            max-height: 70vh; /* Ajuste conforme necessário */
+            overflow-y: auto;
+            padding-right: 16px; /* Para compensar a largura da barra de rolagem */
+        }
+        /* Estilos para o botão de cópia */
+        #copyHtmlButton {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="left-header">
+              <img class="logo" src="https://inkaflixgeneratorpro.netlify.app/Image/Inkaflix.png" alt="inkaolis">
+             
+            
+<nav>
+    <a href="../filmes/filmes.html"><button id="moviesButton">Filmes</button></a>
+    <a href='../series/series.html'><button id="moviesButton">Séries</button></a>
+    <a href='../episodio/episodios.html'><button id="episodesButton">Episódios</button></a>
+</nav>   
+     </div>
+    </header>
+    <main>
+        <div class="filters">
+            <select id="yearFilter">
+                <option value="">All years</option>
+            </select>
+            <select id="popularityFilter">
+                <option value="popularity.desc">Popularity desc</option>
+                <option value="popularity.asc">Popularity asc</option>
+            </select>
+            <select id="genreFilter">
+                <option value="">All genres</option>
+                <option value="28">Action</option>
+                <option value="12">Adventure</option>
+                <option value="16">Animation</option>
+                <option value="35">Comedy</option>
+                <option value="80">Crime</option>
+                <option value="99">Documentary</option>
+                <option value="18">Drama</option>
+                <option value="10751">Family</option>
+                <option value="14">Fantasy</option>
+                <option value="36">History</option>
+                <option value="27">Horror</option>
+                <option value="10402">Music</option>
+                <option value="9648">Mystery</option>
+                <option value="10749">Romance</option>
+                <option value="878">Science Fiction</option>
+                <option value="10770">TV Movie</option>
+                <option value="53">Thriller</option>
+                <option value="10752">War</option>
+                <option value="37">Western</option>
+            </select>
+            <button id="discoverButton">Discover</button>
+            <div class="search-bar">
+                <input type="text" placeholder="Search..." id="searchInput">
+                <button id="searchButton">Search</button>
+            </div>
+        </div>
+        <div class="movie-grid" id="movieGrid">
+            <!-- Movie cards will be generated here -->
+        </div>
+        <div class="search-results" id="searchResults">
+            <!-- Search results will be displayed here -->
+        </div>
+        <div class="spinner" id="loadingSpinner"></div>
+    </main>
+    <div class="status-bar">
+        <span class="filter-status">WhatsApp: +52 56 4617 5570</span>
+        <span class="dbmvs-status">Best movie series generator for blogger</span>
+    </div>
+
+    <div id="blurOverlay" class="blur hidden"></div>
+    <div id="movieDialog" class="movie-dialog hidden">
+        <button class="close-button" id="closeDialog">X</button>
+        <div class="dialog-content">
+            <div class="w-full mb-6">
+                <label for="title" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Title</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogTitle" name="title" value="">
+            </div>
+            <div class="w-full mb-6">
+                <label for="original_title" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Original title</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogOriginalTitle" name="original_title" value="">
+            </div>
+			<input type="hidden" id="dialogImdbID">
+
+            <div class="w-full mb-6">
+                <label for="synopsis" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Synopsis</label>
+                <textarea id="dialogSynopsis" name="synopsis" class="w-full p-4 border-2 border-zinc-200 rounded focus:outline-indigo-500"></textarea>
+
+
+
+            <div class="w-full mb-6">
+                <label for="runtime" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Runtime</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogRuntime" name="runtime" value="">
+            </div>
+            <div class="w-full mb-6">
+                <label for="year" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Year</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogYear" name="year" value="">
+            </div>
+            <div class="w-full mb-6">
+                <label for="release_date" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Release date</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogReleaseDate" name="release_date" value="">
+            </div>
+            <div class="w-full mb-6">
+                <label for="rating" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Rating</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogRating" name="rating" value="">
+            </div>
+            <div class="w-full mb-6">
+                <label for="status" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Status</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogStatus" name="status" value="">
+            </div>
+            <div class="w-full mb-6">
+                <label for="tmdb_rate" class="block select-none mb-2 text-sm font-semibold text-zinc-700">TMDB rate</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogTmdbRate" name="tmdb_rate" value="">
+            </div>
+            <div class="w-full mb-6">
+                <label for="genres" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Genres</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogGenres" name="genres" value="">
+            </div>
+<div class="w-full mb-6">
+    <label for="trailer_id" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Trailer YouTube</label>
+    <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogTrailerId" name="trailer_id" value="">
+</div>
+
+            <div class="w-full mb-6">
+                <label for="poster_image" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Poster image</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogPosterImage" name="poster_image" value="">
+            </div>
+            <div class="w-full mb-6">
+                <label for="backdrop_image" class="block select-none mb-2 text-sm font-semibold text-zinc-700">Backdrop image</label>
+                <input type="text" class="w-full p-4 py-3 border-2 border-zinc-200 rounded focus:outline-indigo-500" id="dialogBackdropImage" name="backdrop_image" value="">
+            </div>
+        </div>
+	   <button id="copyHtmlButton" class="bg-indigo-500 text-white inline-flex items-center gap-4 p-4 py-2 mt-2 leading-none text-sm font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none">
+            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+        </svg>
+        <span id="buttonText">Copy html</span>
+    </button>
+
+    
+    </div>
+     <script>
+        document.getElementById('copyHtmlButton').addEventListener('click', function() {
+            // Altera o texto do botão para "Copiado com sucesso"
+            document.getElementById('buttonText').innerText = 'Copiado com sucesso';
+            // Define um tempo limite para restaurar o texto original
+            setTimeout(function() {
+                document.getElementById('buttonText').innerText = 'Copy html';
+            }, 2000); // Tempo em milissegundos (2000 = 2 segundos)
+        });
+    </script>  
+    <script src="../filmes/js/main.js"></script>
+</body>
+</html>
